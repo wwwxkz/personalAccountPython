@@ -1,88 +1,87 @@
-# Note print('\x1b[2J') also works, but not in all terminals, that is why I am using OS.
-# In a production enviroment I would try to use as few libs as possible, and the fastest
-# solutions, like a simple print
-import os
-# Using Tkinter instead of QT or other faster framework because of the simplicity and
-# development speed of Tkinter. For more personalization you can port the core code to
-# QT, GTK, or any other framework, I will make "front and backend" separeted
 from tkinter import *
+from tkinter import ttk
 
-# Ask user if he wants to run in fallback mode (console/terminal with core features)
-while True:
-    fallback = int(input(' Would you like to run in fallback mode 0/Yes 1/No: '))
-    if fallback == 1 or fallback == 0:
-        break
-
-# Save users locally in a global var
 users = []
-# User admin class to control de banking solution
 class admin:
-    # Start control panel in while True, without break from root, just from childs
-    # Actually there is a break, but in the Exit option
+    root = Tk()
+    frm = ttk.Frame(root, padding=40)
+    frm.grid()
     def __init__(self):
         while True:
-            if fallback = 0:
-                os.system('cls||clear')
-                option = int(input(' 1: Get users \n 2: Remove user \n 3: Add user \n 4: Edit user \n 5: Exit \n '))
-                if option == 1:
-                    self.get_users()
-                elif option == 2:
-                    self.remove_user()
-                elif option == 3:
-                    self.add_user()
-                elif option == 4:
-                    os.system('cls||clear')
-                    id = int(input(' What is the user ID: '))
-                    self.edit_user(id)
-                elif option == 5:
-                    break
-                else:
-                    print(' Something went wrong, please try again (Just numbers from 1-3) ')
-
-    # Deal with user Account class throught functions, add, remove, and edit users
+            self.clear()
+            ttk.Label(self.frm, text="Admin Control Panel").grid(column=1, row=0)
+            ttk.Button(self.frm, text="Get users", command=self.get_users).grid(column=1, row=1)
+            ttk.Button(self.frm, text="Add user", command=self.add_user).grid(column=1, row=3)
+            ttk.Button(self.frm, text="Exit", command=self.root.destroy).grid(column=1, row=5)
+            self.root.mainloop()
     def get_users(self):
-        os.system('cls||clear')
-        for user in users:
-            print(' ID: ', user.get_id())
-            print(' User: ', user.get_name())
-            print(' Age: ', user.get_age())
-            print(' Balance: ', user.get_balance())
-            print('\n')
-        input(' Press any key to continue ')
+        self.clear()
+        for i, user in enumerate(users):
+            ttk.Label(self.frm, text="ID: ").grid(column=0, row=i)
+            ttk.Label(self.frm, text=user.get_id()).grid(column=1, row=i)
+            ttk.Label(self.frm, text="Name: ").grid(column=2, row=i)
+            ttk.Label(self.frm, text=user.get_name()).grid(column=3, row=i)
+            ttk.Label(self.frm, text="Age: ").grid(column=4, row=i)
+            ttk.Label(self.frm, text=user.get_age()).grid(column=5, row=i)
+            ttk.Label(self.frm, text="Balance: ").grid(column=6, row=i)
+            ttk.Label(self.frm, text=user.get_balance()).grid(column=7, row=i)
+            self.id = user.get_id()
+            ttk.Button(self.frm, text="Edit", command=self.edit_user).grid(column=8, row=i)
+            ttk.Button(self.frm, text="Remove", command=self.remove_user).grid(column=9, row=i)
+        ttk.Button(self.frm, text="Exit", command=self.__init__).grid(column=5)
     def add_user(self):
-        os.system('cls||clear')
-        name = input(' What is your name: ')
-        age = input(' What is your age: ')
+        self.clear()
+        ttk.Label(self.frm, text="What is your name").grid(column=1, row=0)
+        self.name = ttk.Entry(self.frm)
+        self.name.grid(column=1, row=1)
+        ttk.Label(self.frm, text="What is your age").grid(column=1, row=2)
+        self.age = ttk.Entry(self.frm)
+        self.age.grid(column=1, row=3)
+        ttk.Button(self.frm, text="Add", command=self.add_user_tk).grid(column=1, row=5)
+    def add_user_tk(self):
         id = len(users)
-        users.append(account(id, name, age))  
-        print(' Success! user added ')
-        input(' Press any key to continue ')
-    def edit_user(self, id):
-        while 1:
-            os.system('cls||clear')
-            option = int(input(' 1: Exit \n 2: Add balance \n 3: Remove balance \n '))
-            if option == 1:
-                break
-            elif option == 2:
-                amount = int(input(' How much to add: '))
-                users[id].add_balance(amount)
-            elif option == 3:
-                amount = int(input(' How much to remove: '))
-                users[id].remove_balance(amount)
+        users.append(account(id, self.name.get(), self.age.get()))
+        self.__init__()
+    def remove_user(self):
+        users.pop(self.id)
+        self.get_users()
+    def edit_user(self):
+        self.clear()
+        ttk.Label(self.frm, text="User panel").grid(column=1, row=0)
+        ttk.Button(self.frm, text="Add balance", command=self.edit_user_add_balance).grid(column=1, row=1)
+        ttk.Button(self.frm, text="Remove balance", command=self.edit_user_remove_balance).grid(column=1, row=2)
+        ttk.Button(self.frm, text="Exit", command=self.__init__).grid(column=1, row=3)
+    def edit_user_add_balance(self):
+        self.clear()
+        self.amount = ttk.Entry(self.frm)
+        self.amount.grid(column=0, row=0)
+        ttk.Button(self.frm, text="Add", command=self.edit_user_add_balance_tk).grid(column=0, row=1)
+    def edit_user_add_balance_tk(self):
+        users[self.id].add_balance(int(self.amount.get()))
+        self.edit_user()
+    def edit_user_remove_balance(self):
+        self.clear()
+        self.amount = ttk.Entry(self.frm)
+        self.amount.grid(column=0, row=0)
+        ttk.Button(self.frm, text="Remove", command=self.edit_user_remove_balance_tk).grid(column=0, row=1)
+    def edit_user_remove_balance_tk(self):
+        users[self.id].remove_balance(int(self.amount.get()))
+        self.edit_user()
+    def clear(self):
+        self.frm.destroy()
+        self.frm = ttk.Frame(self.root, padding=40)
+        self.frm.grid()
 
-# Structure to create new accounts, not acessed directly but throught admin control panel
 class account:
     def __init__(self, id, name, age):
         self.__id = id
         self.__name = name
         self.__age = age
-        self.__balance = 0
-    
+        self.__balance = 0 
     def add_balance(self, to_add):
         self.__balance += to_add
     def remove_balance(self, to_remove):
         self.__balance -= to_remove
-
     def get_id(self):
         return self.__id
     def get_name(self):
@@ -92,5 +91,4 @@ class account:
     def get_balance(self):
         return self.__balance
 
-# Create admin instance, and call __Init__ 
 admin()
