@@ -1,3 +1,5 @@
+import account
+
 from tkinter import *
 from tkinter import ttk
 
@@ -25,9 +27,11 @@ class admin:
             ttk.Label(self.frm, text=user.get_age()).grid(column=5, row=i)
             ttk.Label(self.frm, text="Balance: ").grid(column=6, row=i)
             ttk.Label(self.frm, text=user.get_balance()).grid(column=7, row=i)
+            ttk.Label(self.frm, text="Savings: ").grid(column=8, row=i)
+            ttk.Label(self.frm, text=user.get_savings()).grid(column=9, row=i)
             self.id = user.get_id()
-            ttk.Button(self.frm, text="Edit", command=self.edit_user).grid(column=8, row=i)
-            ttk.Button(self.frm, text="Remove", command=self.remove_user).grid(column=9, row=i)
+            ttk.Button(self.frm, text="Edit", command=self.edit_user).grid(column=10, row=i)
+            ttk.Button(self.frm, text="Remove", command=self.remove_user).grid(column=11, row=i)
         ttk.Button(self.frm, text="Exit", command=self.__init__).grid(column=5)
     def add_user(self):
         self.clear()
@@ -50,7 +54,9 @@ class admin:
         ttk.Label(self.frm, text="User panel").grid(column=1, row=0)
         ttk.Button(self.frm, text="Add balance", command=self.edit_user_add_balance).grid(column=1, row=1)
         ttk.Button(self.frm, text="Remove balance", command=self.edit_user_remove_balance).grid(column=1, row=2)
-        ttk.Button(self.frm, text="Exit", command=self.__init__).grid(column=1, row=3)
+        ttk.Button(self.frm, text="Add savings", command=self.edit_user_transfer_in_savings).grid(column=1, row=3)
+        ttk.Button(self.frm, text="Remove savings", command=self.edit_user_transfer_out_savings).grid(column=1, row=4)
+        ttk.Button(self.frm, text="Exit", command=self.__init__).grid(column=1, row=5)
     def edit_user_add_balance(self):
         self.clear()
         self.amount = ttk.Entry(self.frm)
@@ -67,28 +73,38 @@ class admin:
     def edit_user_remove_balance_tk(self):
         users[self.id].remove_balance(int(self.amount.get()))
         self.edit_user()
+    def edit_user_transfer_in_savings(self):
+        self.clear()
+        self.amount = ttk.Entry(self.frm)
+        self.amount.grid(column=0, row=0)
+        ttk.Button(self.frm, text="Add", command=self.edit_user_transfer_in_savings_tk).grid(column=0, row=1)
+    def edit_user_transfer_in_savings_tk(self):
+        response = users[self.id].transfer_in_savings(int(self.amount.get()))
+        self.clear()   
+        if response == 1:
+            ttk.Label(self.frm, text="You do not hold this amount in your balance").grid(column=1, row=0)
+            ttk.Button(self.frm, text="Exit", command=self.edit_user).grid(column=1, row=1)
+        else:
+            ttk.Label(self.frm, text="Success, value transfered").grid(column=1, row=0)
+            ttk.Button(self.frm, text="Exit", command=self.edit_user).grid(column=1, row=1)
+    def edit_user_transfer_out_savings(self):
+        self.clear()
+        self.amount = ttk.Entry(self.frm)
+        self.amount.grid(column=0, row=0)
+        ttk.Button(self.frm, text="Remove", command=self.edit_user_transfer_out_savings_tk).grid(column=0, row=1)
+    def edit_user_transfer_out_savings_tk(self):
+        response = users[self.id].transfer_out_savings(int(self.amount.get()))
+        self.clear()
+        if response == 1:
+            ttk.Label(self.frm, text="You do not hold this amount in your savings").grid(column=1, row=0)
+            ttk.Button(self.frm, text="Exit", command=self.edit_user).grid(column=1, row=1)
+        else:
+            ttk.Label(self.frm, text="Success, value transfered").grid(column=1, row=0)
+            ttk.Button(self.frm, text="Exit", command=self.edit_user).grid(column=1, row=1)
+
     def clear(self):
         self.frm.destroy()
         self.frm = ttk.Frame(self.root, padding=40)
         self.frm.grid()
-
-class account:
-    def __init__(self, id, name, age):
-        self.__id = id
-        self.__name = name
-        self.__age = age
-        self.__balance = 0 
-    def add_balance(self, to_add):
-        self.__balance += to_add
-    def remove_balance(self, to_remove):
-        self.__balance -= to_remove
-    def get_id(self):
-        return self.__id
-    def get_name(self):
-        return self.__name
-    def get_age(self):
-        return self.__age
-    def get_balance(self):
-        return self.__balance
 
 admin()

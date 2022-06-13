@@ -1,3 +1,5 @@
+import account
+
 import os
 
 users = []
@@ -29,6 +31,7 @@ class admin:
             print(' User: ', user.get_name())
             print(' Age: ', user.get_age())
             print(' Balance: ', user.get_balance())
+            print(' Savings: ', user.get_savings())
             print('\n')
         input(' Press any key to continue ')
     def add_user(self):
@@ -44,7 +47,7 @@ class admin:
     def edit_user(self, id):
         while 1:
             os.system('cls||clear')
-            option = int(input(' 1: Exit \n 2: Add balance \n 3: Remove balance \n '))
+            option = int(input(' 1: Exit \n 2: Add balance \n 3: Remove balance \n 4: Add savings \n 5: Remove savings \n 6: Set interest \n '))
             if option == 1:
                 break
             elif option == 2:
@@ -53,24 +56,26 @@ class admin:
             elif option == 3:
                 amount = int(input(' How much to remove: '))
                 users[id].remove_balance(amount)
-
-class account:
-    def __init__(self, id, name, age):
-        self.__id = id
-        self.__name = name
-        self.__age = age
-        self.__balance = 0
-    def add_balance(self, to_add):
-        self.__balance += to_add
-    def remove_balance(self, to_remove):
-        self.__balance -= to_remove
-    def get_id(self):
-        return self.__id
-    def get_name(self):
-        return self.__name
-    def get_age(self):
-        return self.__age
-    def get_balance(self):
-        return self.__balance
+            elif option == 4:
+                amount = int(input(' How much to transfer in savings: '))
+                response = users[id].transfer_in_savings(amount)
+                if response == 1:
+                    print(' You do not hold this amount in your balance ')
+                    input(' Press any key to continue ')
+                else:
+                    print(' Success, value transfered ')
+                    print(' Press any key to continue ')
+            elif option == 5:
+                amount = int(input(' How much to transfer out savings: '))
+                response = users[id].transfer_out_savings(amount)
+                if response == 1:
+                    print(' You do not hold this amount in your savings ')
+                    input(' Press any key to continue ')
+                else:
+                    print(' Success, value transfered')
+                    input(' Press any key to continue ')
+            elif option == 6:
+                amount = int(input(' Set an interest rate for your savings account: '))    
+                users[id].set_interest(amount)
 
 admin()
