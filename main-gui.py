@@ -27,6 +27,7 @@ class admin:
         ttk.Button(self.frm, text="Delete logs", command=self.delete_logs).grid(column=1, row=1)
         ttk.Button(self.frm, text="Delete accounts", command=self.delete_accounts).grid(column=1, row=2)
         ttk.Button(self.frm, text="Pass day", command=self.pass_day).grid(column=1, row=3)
+        ttk.Button(self.frm, text="Exit", command=self.__init__).grid(column=1, row=4)
     def delete_logs(self):
         self.clear()
         os.remove('personal_account_python_log.txt')
@@ -56,11 +57,11 @@ class admin:
             ttk.Label(self.frm, text=user.get_balance()).grid(column=7, row=i)
             ttk.Label(self.frm, text="Savings: ").grid(column=8, row=i)
             ttk.Label(self.frm, text=user.get_savings()).grid(column=9, row=i)
-            ttk.Label(self.frm, text="Interest: ").grid(column=9, row=i)
-            ttk.Label(self.frm, text=user.get_interest()).grid(column=10, row=i)
+            ttk.Label(self.frm, text="Interest: ").grid(column=10, row=i)
+            ttk.Label(self.frm, text=user.get_interest()).grid(column=11, row=i)
             self.id = user.get_id()
-            ttk.Button(self.frm, text="Edit", command=self.edit_user).grid(column=11, row=i)
-            ttk.Button(self.frm, text="Remove", command=self.remove_user).grid(column=12, row=i)
+            ttk.Button(self.frm, text="Edit", command=self.edit_user).grid(column=12, row=i)
+            ttk.Button(self.frm, text="Remove", command=self.remove_user).grid(column=13, row=i)
         ttk.Button(self.frm, text="Exit", command=self.__init__).grid(column=6)
     def add_user(self):
         self.clear()
