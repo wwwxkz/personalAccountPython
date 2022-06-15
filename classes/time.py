@@ -1,4 +1,5 @@
 from datetime import datetime
+import threading
 import shutil
 
 class log:
@@ -7,6 +8,7 @@ class log:
         date = datetime.now()
         log.write(date.strftime('%m/%d/%Y, %H:%M:%S') + ' - Log created')
         log.close()
+        self.log_backup()
     def log_get():
         log = open('personal_account_python_log.txt', 'r')
         log_lines = log.read().splitlines()
@@ -19,3 +21,5 @@ class log:
         log.close()
     def log_backup(self):
         shutil.copyfile('personal_account_python_log.txt', 'personal_account_python_log_backup.txt')
+        start_time = threading.Timer(3600, self.log_backup)
+        start_time.start()
