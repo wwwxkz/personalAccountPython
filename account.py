@@ -23,7 +23,10 @@ class account:
         else:
             return 1
     def set_interest(self, to_set):
-        self.__interest = to_set 
+        if to_set <= 1000:
+            self.__interest = to_set
+        else:
+            return 1 
     def get_id(self):
         return self.__id
     def get_name(self):
@@ -34,5 +37,5 @@ class account:
         return self.__balance
     def get_savings(self):
         return self.__savings
-
-
+    def get_interest(self):
+        return self.__interest

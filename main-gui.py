@@ -1,4 +1,4 @@
-import account
+from account import *
 
 from tkinter import *
 from tkinter import ttk
@@ -29,10 +29,12 @@ class admin:
             ttk.Label(self.frm, text=user.get_balance()).grid(column=7, row=i)
             ttk.Label(self.frm, text="Savings: ").grid(column=8, row=i)
             ttk.Label(self.frm, text=user.get_savings()).grid(column=9, row=i)
+            ttk.Label(self.frm, text="Interest: ").grid(column=9, row=i)
+            ttk.Label(self.frm, text=user.get_interest()).grid(column=10, row=i)
             self.id = user.get_id()
-            ttk.Button(self.frm, text="Edit", command=self.edit_user).grid(column=10, row=i)
-            ttk.Button(self.frm, text="Remove", command=self.remove_user).grid(column=11, row=i)
-        ttk.Button(self.frm, text="Exit", command=self.__init__).grid(column=5)
+            ttk.Button(self.frm, text="Edit", command=self.edit_user).grid(column=11, row=i)
+            ttk.Button(self.frm, text="Remove", command=self.remove_user).grid(column=12, row=i)
+        ttk.Button(self.frm, text="Exit", command=self.__init__).grid(column=6)
     def add_user(self):
         self.clear()
         ttk.Label(self.frm, text="What is your name").grid(column=1, row=0)
@@ -56,7 +58,8 @@ class admin:
         ttk.Button(self.frm, text="Remove balance", command=self.edit_user_remove_balance).grid(column=1, row=2)
         ttk.Button(self.frm, text="Add savings", command=self.edit_user_transfer_in_savings).grid(column=1, row=3)
         ttk.Button(self.frm, text="Remove savings", command=self.edit_user_transfer_out_savings).grid(column=1, row=4)
-        ttk.Button(self.frm, text="Exit", command=self.__init__).grid(column=1, row=5)
+        ttk.Button(self.frm, text="Set interest", command=self.edit_user_set_interest).grid(column=1, row=5)
+        ttk.Button(self.frm, text="Exit", command=self.__init__).grid(column=1, row=6)
     def edit_user_add_balance(self):
         self.clear()
         self.amount = ttk.Entry(self.frm)
@@ -101,7 +104,20 @@ class admin:
         else:
             ttk.Label(self.frm, text="Success, value transfered").grid(column=1, row=0)
             ttk.Button(self.frm, text="Exit", command=self.edit_user).grid(column=1, row=1)
-
+    def edit_user_set_interest(self):
+        self.clear()
+        self.amount = ttk.Entry(self.frm)
+        self.amount.grid(column=0, row=0)
+        ttk.Button(self.frm, text="Set", command=self.edit_user_set_interest_tk).grid(column=0, row=1)
+    def edit_user_set_interest_tk(self):
+        response = users[self.id].set_interest(int(self.amount.get()))
+        self.clear()
+        if response == 1:
+            ttk.Label(self.frm, text="Are you sure that this is correct? > 1000% seems a lot").grid(column=1, row=0)
+            ttk.Button(self.frm, text="Exit", command=self.edit_user).grid(column=1, row=1)
+        else:
+            ttk.Label(self.frm, text="Success, interest set").grid(column=1, row=0)
+            ttk.Button(self.frm, text="Exit", command=self.edit_user).grid(column=1, row=1)
     def clear(self):
         self.frm.destroy()
         self.frm = ttk.Frame(self.root, padding=40)

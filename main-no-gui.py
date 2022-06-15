@@ -1,4 +1,4 @@
-import account
+from account import *
 
 import os
 
@@ -32,6 +32,7 @@ class admin:
             print(' Age: ', user.get_age())
             print(' Balance: ', user.get_balance())
             print(' Savings: ', user.get_savings())
+            print(' Interest: ', user.get_interest(), '%')
             print('\n')
         input(' Press any key to continue ')
     def add_user(self):
@@ -72,10 +73,16 @@ class admin:
                     print(' You do not hold this amount in your savings ')
                     input(' Press any key to continue ')
                 else:
-                    print(' Success, value transfered')
+                    print(' Success, value transfered ')
                     input(' Press any key to continue ')
             elif option == 6:
                 amount = int(input(' Set an interest rate for your savings account: '))    
-                users[id].set_interest(amount)
+                response = users[id].set_interest(amount)
+                if response == 1:
+                    print(' Are you sure that this is correct? > 1000% seems a lot ')
+                    input(' Press any key to continue ')
+                else:
+                    print(' Success, interest set ')
+                    input(' Press any key to continue ')
 
 admin()
