@@ -1,4 +1,4 @@
-from account import *
+from classes.account import *
 
 from tkinter import *
 from tkinter import ttk

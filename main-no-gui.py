@@ -1,4 +1,4 @@
-from account import *
+from classes.account import *
 
 import os
 
