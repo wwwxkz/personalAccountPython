@@ -1,4 +1,4 @@
-from classes.time import *
+from classes.log import *
 
 class account:
     def __init__(self, id, name, age):
@@ -16,6 +16,8 @@ class account:
     def remove_balance(self, to_remove):
         self.__balance -= to_remove
         log.log_new('Removed balance from the user: ' +  self.__name + ' with ID: ' + str(self.__id))
+    def set_savings(self, to_set):
+        self.__savings += to_set
     def transfer_in_savings(self, to_add):
         if self.__balance >= to_add:
             self.__savings += to_add

@@ -1,14 +1,19 @@
 from classes.account import *
+from classes.days import *
 
 import os
 
 users = []
+
 class admin:
     def __init__(self):
+        self.days = days()
         while True:
             os.system('cls||clear')
-            option = int(input(' 1: Get users \n 2: Remove user \n 3: Add user \n 4: Edit user \n 5: Exit \n '))
-            if option == 1:
+            option = int(input(' 0: Admin \n 1: Get users \n 2: Remove user \n 3: Add user \n 4: Edit user \n 5: Exit \n '))
+            if option == 0:
+                self.admin()
+            elif option == 1:
                 self.get_users()
             elif option == 2:
                 os.system('cls||clear')
@@ -23,7 +28,24 @@ class admin:
             elif option == 5:
                 break
             else:
-                print(' Something went wrong, please try again (Just numbers from 1-3) ')
+                self.status_log(' Something went wrong, please try again (Just numbers from 0-5) ')
+    def status_log(self, text):
+        print(text)
+        input(' Press any key to continue ')
+    def admin(self):
+        os.system('cls||clear')
+        option = int(input(' 1: Delete logs \n 2: Delete accounts \n 3: Pass day \n'))
+        if option == 1:
+            os.remove('personal_account_python_log.txt')
+            os.remove('personal_account_python_log_backup.txt')
+        elif option == 2:
+            self.users = []
+            self.status_log(' Success! all accounts have been deleted ')
+        elif option == 3:
+            self.days.pass_day(users)
+            self.status_log(' Success! day passed, and user yields updated ')
+        else:
+            self.status_log(' Something went wrong, please try again (Just numbers from 1-3) ')
     def get_users(self):
         os.system('cls||clear')
         for user in users:
@@ -40,9 +62,8 @@ class admin:
         name = input(' What is your name: ')
         age = input(' What is your age: ')
         id = len(users)
-        users.append(account(id, name, age))  
-        print(' Success! user added ')
-        input(' Press any key to continue ')
+        users.append(account(id, name, age))
+        self.status_log(' Success! user added ')
     def remove_user(self, id):
         users.pop(id)
     def edit_user(self, id):
@@ -61,28 +82,22 @@ class admin:
                 amount = int(input(' How much to transfer in savings: '))
                 response = users[id].transfer_in_savings(amount)
                 if response == 1:
-                    print(' You do not hold this amount in your balance ')
-                    input(' Press any key to continue ')
+                    self.status_log(' You do not hold this amount in your balance ')
                 else:
-                    print(' Success, value transfered ')
-                    print(' Press any key to continue ')
+                    self.status_log(' Success, value transfered ')
             elif option == 5:
                 amount = int(input(' How much to transfer out savings: '))
                 response = users[id].transfer_out_savings(amount)
                 if response == 1:
-                    print(' You do not hold this amount in your savings ')
-                    input(' Press any key to continue ')
+                    self.status_log(' You do not hold this amount in your savings ')
                 else:
-                    print(' Success, value transfered ')
-                    input(' Press any key to continue ')
+                    self.status_log(' Success, value transfered ')
             elif option == 6:
                 amount = int(input(' Set an interest rate for your savings account: '))    
                 response = users[id].set_interest(amount)
                 if response == 1:
-                    print(' Are you sure that this is correct? > 1000% seems a lot ')
-                    input(' Press any key to continue ')
+                    self.status_log(' Are you sure that this is correct? > 1000% seems a lot ')
                 else:
-                    print(' Success, interest set ')
-                    input(' Press any key to continue ')
+                    self.status_log(' Success, interest set ')
 
 admin()
