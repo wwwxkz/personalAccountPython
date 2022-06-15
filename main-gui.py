@@ -1,7 +1,10 @@
 from classes.account import *
+from classes.days import *
 
 from tkinter import *
 from tkinter import ttk
+
+import os
 
 users = []
 class admin:
@@ -9,13 +12,37 @@ class admin:
     frm = ttk.Frame(root, padding=40)
     frm.grid()
     def __init__(self):
+        self.days = days()
         while True:
             self.clear()
-            ttk.Label(self.frm, text="Admin Control Panel").grid(column=1, row=0)
-            ttk.Button(self.frm, text="Get users", command=self.get_users).grid(column=1, row=1)
+            ttk.Label(self.frm, text="Control Panel").grid(column=1, row=0)
+            ttk.Button(self.frm, text="Admin", command=self.admin).grid(column=1, row=1)
+            ttk.Button(self.frm, text="Get users", command=self.get_users).grid(column=1, row=2)
             ttk.Button(self.frm, text="Add user", command=self.add_user).grid(column=1, row=3)
-            ttk.Button(self.frm, text="Exit", command=self.root.destroy).grid(column=1, row=5)
+            ttk.Button(self.frm, text="Exit", command=self.root.destroy).grid(column=1, row=4)
             self.root.mainloop()
+    def admin(self):
+        self.clear()
+        ttk.Label(self.frm, text="Admin Control Panel").grid(column=1, row=0)
+        ttk.Button(self.frm, text="Delete logs", command=self.delete_logs).grid(column=1, row=1)
+        ttk.Button(self.frm, text="Delete accounts", command=self.delete_accounts).grid(column=1, row=2)
+        ttk.Button(self.frm, text="Pass day", command=self.pass_day).grid(column=1, row=3)
+    def delete_logs(self):
+        self.clear()
+        os.remove('personal_account_python_log.txt')
+        os.remove('personal_account_python_log_backup.txt')
+        ttk.Label(self.frm, text="Success! all logs have been deleted").grid(column=1, row=0)
+        ttk.Button(self.frm, text="Exit", command=self.admin).grid(column=1, row=1)
+    def delete_accounts(self):
+        self.clear()
+        self.users = []
+        ttk.Label(self.frm, text="Success! all accounts have been deleted").grid(column=1, row=0)
+        ttk.Button(self.frm, text="Exit", command=self.admin).grid(column=1, row=1)
+    def pass_day(self):
+        self.clear()
+        self.days.pass_day(users)
+        ttk.Label(self.frm, text="Success! day passed, and user yields updated").grid(column=1, row=0)
+        ttk.Button(self.frm, text="Exit", command=self.admin).grid(column=1, row=1)
     def get_users(self):
         self.clear()
         for i, user in enumerate(users):
@@ -88,7 +115,7 @@ class admin:
             ttk.Label(self.frm, text="You do not hold this amount in your balance").grid(column=1, row=0)
             ttk.Button(self.frm, text="Exit", command=self.edit_user).grid(column=1, row=1)
         else:
-            ttk.Label(self.frm, text="Success, value transfered").grid(column=1, row=0)
+            ttk.Label(self.frm, text="Success! value transfered").grid(column=1, row=0)
             ttk.Button(self.frm, text="Exit", command=self.edit_user).grid(column=1, row=1)
     def edit_user_transfer_out_savings(self):
         self.clear()
@@ -102,7 +129,7 @@ class admin:
             ttk.Label(self.frm, text="You do not hold this amount in your savings").grid(column=1, row=0)
             ttk.Button(self.frm, text="Exit", command=self.edit_user).grid(column=1, row=1)
         else:
-            ttk.Label(self.frm, text="Success, value transfered").grid(column=1, row=0)
+            ttk.Label(self.frm, text="Success! value transfered").grid(column=1, row=0)
             ttk.Button(self.frm, text="Exit", command=self.edit_user).grid(column=1, row=1)
     def edit_user_set_interest(self):
         self.clear()
@@ -116,7 +143,7 @@ class admin:
             ttk.Label(self.frm, text="Are you sure that this is correct? > 1000% seems a lot").grid(column=1, row=0)
             ttk.Button(self.frm, text="Exit", command=self.edit_user).grid(column=1, row=1)
         else:
-            ttk.Label(self.frm, text="Success, interest set").grid(column=1, row=0)
+            ttk.Label(self.frm, text="Success! interest set").grid(column=1, row=0)
             ttk.Button(self.frm, text="Exit", command=self.edit_user).grid(column=1, row=1)
     def clear(self):
         self.frm.destroy()

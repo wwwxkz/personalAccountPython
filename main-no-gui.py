@@ -38,6 +38,7 @@ class admin:
         if option == 1:
             os.remove('personal_account_python_log.txt')
             os.remove('personal_account_python_log_backup.txt')
+            self.status_log(' Success! all logs have been deleted ')
         elif option == 2:
             self.users = []
             self.status_log(' Success! all accounts have been deleted ')
@@ -84,20 +85,20 @@ class admin:
                 if response == 1:
                     self.status_log(' You do not hold this amount in your balance ')
                 else:
-                    self.status_log(' Success, value transfered ')
+                    self.status_log(' Success! value transfered ')
             elif option == 5:
                 amount = int(input(' How much to transfer out savings: '))
                 response = users[id].transfer_out_savings(amount)
                 if response == 1:
                     self.status_log(' You do not hold this amount in your savings ')
                 else:
-                    self.status_log(' Success, value transfered ')
+                    self.status_log(' Success! value transfered ')
             elif option == 6:
                 amount = int(input(' Set an interest rate for your savings account: '))    
                 response = users[id].set_interest(amount)
                 if response == 1:
                     self.status_log(' Are you sure that this is correct? > 1000% seems a lot ')
                 else:
-                    self.status_log(' Success, interest set ')
+                    self.status_log(' Success! interest set ')
 
 admin()
