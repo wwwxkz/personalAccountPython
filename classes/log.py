@@ -7,8 +7,7 @@ class log:
     def __init__(self):
         log = open('personal_account_python_log.txt', 'w')
         log.write(datetime.now().strftime('%m/%d/%Y, %H:%M:%S') + ' - Log created')
-        log.close() 
-        self.__start_time = Timer(3600, self.log_backup)
+        log.close()
         self.running = 0
         self.log_backup()
     def log_get():
@@ -21,7 +20,9 @@ class log:
         log.write('\n' + datetime.now().strftime('%m/%d/%Y, %H:%M:%S') + ' - ' + action)
         log.close()
     def log_backup(self):
-        shutil.copyfile('personal_account_python_log.txt', 'personal_account_python_log_backup.txt')
-        self.__start_time.start()
+        start_time = Timer(3600, self.log_backup)
         if self.running == 0:
-            self.__start_time.cancel()
+            start_time.cancel()
+        else:
+            shutil.copyfile('personal_account_python_log.txt', 'personal_account_python_log_backup.txt')
+            start_time.start()
