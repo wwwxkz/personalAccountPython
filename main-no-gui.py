@@ -1,5 +1,6 @@
 from classes.account import *
 from classes.days import *
+from classes.log import *
 
 import os
 
@@ -26,6 +27,7 @@ class admin:
                 id = int(input(' What is the user ID: '))
                 self.edit_user(id)
             elif option == 5:
+                log()
                 break
             else:
                 self.status_log(' Something went wrong, please try again (Just numbers from 0-5) ')
