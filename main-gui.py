@@ -9,6 +9,8 @@ import os
 users = []
 class admin:
     root = Tk()
+    root.grid_columnconfigure(0, weight=1)
+    root.grid_rowconfigure(0, weight=1)
     frm = ttk.Frame(root, padding=40)
     frm.grid()
     def __init__(self):
