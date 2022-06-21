@@ -8,36 +8,46 @@ import os
 
 users = []
 class admin:
-    width = 20
-    height = 2
+    widget_width = 40
+    widget_height = 4
     def __init__(self):
         self.days = days()
-        self.color_scheme('dark')
+        self.color_scheme('light')
         self.main()
     def main(self):
         self.root = Tk()
         self.root.grid_columnconfigure(0, weight=1)
         self.root.grid_rowconfigure(0, weight=1)
         self.root.title("personalAccountPython")
-        self.root.geometry("600x300")
         self.root.configure(bg=self.bg)
+        self.root.state('zoomed')
         self.frm = Frame(self.root)
         self.frm.grid()
         self.control_panel()
     def control_panel(self):
         while True:
             self.clear()
-            e1 = Label(self.frm, text="Control Panel", width=self.width, height=self.height)
-            e2 = Button(self.frm, text="Admin", command=self.admin_panel, width=self.width, height=self.height)
-            e3 = Button(self.frm, text="Get users", command=self.get_users, width=self.width, height=self.height)
-            e4 = Button(self.frm, text="Add user", command=self.add_user, width=self.width, height=self.height)
-            e5 = Button(self.frm, text="Dark/Light mode", command=self.theme_switch, width=self.width, height=self.height)
-            e6 = Button(self.frm, text="Exit", command=self.safe_exit, width=self.width, height=self.height)
-            el = [e1, e2, e3, e4, e5, e6]
+            e1 = Label(self.frm, text="Control Panel", width=self.widget_width, height=self.widget_height)
+            e2 = Button(self.frm, text="Admin", command=self.admin_panel, width=self.widget_width, height=self.widget_height)
+            e3 = Button(self.frm, text="Get Users", command=self.get_users, width=self.widget_width, height=self.widget_height)
+            e4 = Button(self.frm, text="Add User", command=self.add_user, width=self.widget_width, height=self.widget_height)
+            e5 = Button(self.frm, text="Increase Font", command=self.increase_font_size, width=self.widget_width, height=self.widget_height)
+            e6 = Button(self.frm, text="Decrease Font", command=self.decrease_font_size, width=self.widget_width, height=self.widget_height)
+            e7 = Button(self.frm, text="Dark Mode", command=self.theme_switch, width=self.widget_width, height=self.widget_height)
+            e8 = Button(self.frm, text="Exit", command=self.safe_exit, width=self.widget_width, height=self.widget_height)
+            el = [e1, e2, e3, e4, e5, e6, e7, e8]
             for i, widget in enumerate(el):
                 widget.grid(column=1, row=i)
                 widget.configure(bg=self.bg, fg=self.fg, borderwidth=1)
             self.root.mainloop()
+    def increase_font_size(self):
+        self.widget_width += 10
+        self.widget_height += 1
+        self.restart_tk()
+    def decrease_font_size(self):
+        self.widget_width -= 10
+        self.widget_height -= 1
+        self.restart_tk()
     def color_scheme(self, mode):
         if mode == 'dark':
             self.bg, self.fg, self.ac = ('#2b2b2b', 'white', '#69cfe0')
@@ -59,11 +69,11 @@ class admin:
         self.root.destroy()
     def admin_panel(self):
         self.clear()
-        e1 = Label(self.frm, text="Admin Control Panel", width=self.width, height=self.height)
-        e2 = Button(self.frm, text="Delete logs", command=self.delete_logs, width=self.width, height=self.height)
-        e3 = Button(self.frm, text="Delete accounts", command=self.delete_accounts, width=self.width, height=self.height)
-        e4 = Button(self.frm, text="Pass day", command=self.pass_day, width=self.width, height=self.height)
-        e5 = Button(self.frm, text="Exit", command=self.control_panel, width=self.width, height=self.height)
+        e1 = Label(self.frm, text="Admin Control Panel", width=self.widget_width, height=self.widget_height)
+        e2 = Button(self.frm, text="Delete logs", command=self.delete_logs, width=self.widget_width, height=self.widget_height)
+        e3 = Button(self.frm, text="Delete accounts", command=self.delete_accounts, width=self.widget_width, height=self.widget_height)
+        e4 = Button(self.frm, text="Pass day", command=self.pass_day, width=self.widget_width, height=self.widget_height)
+        e5 = Button(self.frm, text="Exit", command=self.control_panel, width=self.widget_width, height=self.widget_height)
         el = [e1, e2, e3, e4, e5]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
@@ -73,10 +83,10 @@ class admin:
         try:
             os.remove('personal_account_python_log.txt')
             os.remove('personal_account_python_log_backup.txt')
-            e1 = Label(self.frm, text="Error! no logs found", width=self.width, height=self.height)
+            e1 = Label(self.frm, text="Error! no logs found", width=self.widget_width, height=self.widget_height)
         except:
-            e1 = Label(self.frm, text="Success! all logs have been deleted", width=self.width, height=self.height)
-        e2 = Button(self.frm, text="Exit", command=self.admin_panel, width=self.width, height=self.height)
+            e1 = Label(self.frm, text="Success! all logs have been deleted", width=self.widget_width, height=self.widget_height)
+        e2 = Button(self.frm, text="Exit", command=self.admin_panel, width=self.widget_width, height=self.widget_height)
         el = [e1, e2]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
@@ -84,8 +94,8 @@ class admin:
     def delete_accounts(self):
         self.clear()
         self.users = []
-        e1 = Label(self.frm, text="Success! all accounts have been deleted", width=self.width, height=self.height)
-        e2 = Button(self.frm, text="Exit", command=self.admin_panel, width=self.width, height=self.height)
+        e1 = Label(self.frm, text="Success! all accounts have been deleted", width=self.widget_width, height=self.widget_height)
+        e2 = Button(self.frm, text="Exit", command=self.admin_panel, width=self.widget_width, height=self.widget_height)
         el = [e1, e2]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
@@ -93,8 +103,8 @@ class admin:
     def pass_day(self):
         self.clear()
         self.days.pass_day(users)
-        e1 = Label(self.frm, text="Success! day passed, and user yields updated", width=self.width, height=self.height)
-        e2 = Button(self.frm, text="Exit", command=self.admin_panel, width=self.width, height=self.height)
+        e1 = Label(self.frm, text="Success! day passed, and user yields updated", width=self.widget_width, height=self.widget_height)
+        e2 = Button(self.frm, text="Exit", command=self.admin_panel, width=self.widget_width, height=self.widget_height)
         el = [e1, e2]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
@@ -102,35 +112,35 @@ class admin:
     def get_users(self):
         self.clear()
         for i, user in enumerate(users):
-            e1 = Label(self.frm, text="ID: ", width=self.width, height=self.height)
-            e2 = Label(self.frm, text=user.get_id(), width=self.width, height=self.height)
-            e3 = Label(self.frm, text="Name: ", width=self.width, height=self.height)
-            e4 = Label(self.frm, text=user.get_name(), width=self.width, height=self.height)
-            e5 = Label(self.frm, text="Age: ", width=self.width, height=self.height)
-            e6 = Label(self.frm, text=user.get_age(), width=self.width, height=self.height)
-            e7 = Label(self.frm, text="Balance: ", width=self.width, height=self.height)
-            e8 = Label(self.frm, text=user.get_balance(), width=self.width, height=self.height)
-            e9 = Label(self.frm, text="Savings: ", width=self.width, height=self.height)
-            e10 = Label(self.frm, text=user.get_savings(), width=self.width, height=self.height)
-            e11 = Label(self.frm, text="Interest: ", width=self.width, height=self.height)
-            e12 = Label(self.frm, text=user.get_interest(), width=self.width, height=self.height)
+            e1 = Label(self.frm, text="ID: ", width=self.widget_width, height=self.widget_height)
+            e2 = Label(self.frm, text=user.get_id(), width=self.widget_width, height=self.widget_height)
+            e3 = Label(self.frm, text="Name: ", width=self.widget_width, height=self.widget_height)
+            e4 = Label(self.frm, text=user.get_name(), width=self.widget_width, height=self.widget_height)
+            e5 = Label(self.frm, text="Age: ", width=self.widget_width, height=self.widget_height)
+            e6 = Label(self.frm, text=user.get_age(), width=self.widget_width, height=self.widget_height)
+            e7 = Label(self.frm, text="Balance: ", width=self.widget_width, height=self.widget_height)
+            e8 = Label(self.frm, text=user.get_balance(), width=self.widget_width, height=self.widget_height)
+            e9 = Label(self.frm, text="Savings: ", width=self.widget_width, height=self.widget_height)
+            e10 = Label(self.frm, text=user.get_savings(), width=self.widget_width, height=self.widget_height)
+            e11 = Label(self.frm, text="Interest: ", width=self.widget_width, height=self.widget_height)
+            e12 = Label(self.frm, text=user.get_interest(), width=self.widget_width, height=self.widget_height)
             self.id = user.get_id()
-            e13 = Button(self.frm, text="Edit", command=self.edit_user, width=self.width, height=self.height)
-            e14 = Button(self.frm, text="Remove", command=self.remove_user, width=self.width, height=self.height)
+            e13 = Button(self.frm, text="Edit", command=self.edit_user, width=self.widget_width, height=self.widget_height)
+            e14 = Button(self.frm, text="Remove", command=self.remove_user, width=self.widget_width, height=self.widget_height)
             el = [e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14]
             for i, widget in enumerate(el):
                 widget.grid(column=i, row=1)
                 widget.configure(bg=self.bg, fg=self.fg, borderwidth=1)
-        e1 = Button(self.frm, text="Exit", command=self.control_panel, width=self.width, height=self.height)
+        e1 = Button(self.frm, text="Exit", command=self.control_panel, width=self.widget_width, height=self.widget_height)
         e1.grid(column=7)
         e1.configure(bg=self.bg, fg=self.fg, borderwidth=1)
     def add_user(self):
         self.clear()
-        e1 = Label(self.frm, text="What is your name", width=self.width, height=self.height)
-        self.name = Entry(self.frm, width=self.width)
-        e2 = Label(self.frm, text="What is your age", width=self.width, height=self.height)
-        self.age = Entry(self.frm, width=self.width)
-        e3 = Button(self.frm, text="Add", command=self.add_user_tk, width=self.width, height=self.height)
+        e1 = Label(self.frm, text="What is your name", width=self.widget_width, height=self.widget_height)
+        self.name = Entry(self.frm, width=self.widget_width)
+        e2 = Label(self.frm, text="What is your age", width=self.widget_width, height=self.widget_height)
+        self.age = Entry(self.frm, width=self.widget_width)
+        e3 = Button(self.frm, text="Add", command=self.add_user_tk, width=self.widget_width, height=self.widget_height)
         el = [e1, self.name, e2, self.age, e3]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
@@ -144,22 +154,22 @@ class admin:
         self.get_users()
     def edit_user(self):
         self.clear()
-        e1 = Label(self.frm, text="User panel", width=self.width, height=self.height)
-        e2 = Button(self.frm, text="Add balance", command=self.edit_user_add_balance, width=self.width, height=self.height)
-        e3 = Button(self.frm, text="Remove balance", command=self.edit_user_remove_balance, width=self.width, height=self.height)
-        e4 = Button(self.frm, text="Add savings", command=self.edit_user_transfer_in_savings, width=self.width, height=self.height)
-        e5 = Button(self.frm, text="Remove savings", command=self.edit_user_transfer_out_savings, width=self.width, height=self.height)
-        e6 = Button(self.frm, text="Set interest", command=self.edit_user_set_interest, width=self.width, height=self.height)
-        e7 = Button(self.frm, text="Exit", command=self.control_panel, width=self.width, height=self.height)
+        e1 = Label(self.frm, text="User panel", width=self.widget_width, height=self.widget_height)
+        e2 = Button(self.frm, text="Add balance", command=self.edit_user_add_balance, width=self.widget_width, height=self.widget_height)
+        e3 = Button(self.frm, text="Remove balance", command=self.edit_user_remove_balance, width=self.widget_width, height=self.widget_height)
+        e4 = Button(self.frm, text="Add savings", command=self.edit_user_transfer_in_savings, width=self.widget_width, height=self.widget_height)
+        e5 = Button(self.frm, text="Remove savings", command=self.edit_user_transfer_out_savings, width=self.widget_width, height=self.widget_height)
+        e6 = Button(self.frm, text="Set interest", command=self.edit_user_set_interest, width=self.widget_width, height=self.widget_height)
+        e7 = Button(self.frm, text="Exit", command=self.control_panel, width=self.widget_width, height=self.widget_height)
         el = [e1, e2, e3, e4, e5, e6, e7]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
             widget.configure(bg=self.bg, fg=self.fg, borderwidth=1)
     def edit_user_add_balance(self):
         self.clear()
-        self.amount = Entry(self.frm, width=self.width)
+        self.amount = Entry(self.frm, width=self.widget_width)
         self.amount.grid(column=0, row=0)
-        e1 = Button(self.frm, text="Add", command=self.edit_user_add_balance_tk, width=self.width, height=self.height)
+        e1 = Button(self.frm, text="Add", command=self.edit_user_add_balance_tk, width=self.widget_width, height=self.widget_height)
         el = [self.amount, e1]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
@@ -169,9 +179,9 @@ class admin:
         self.edit_user()
     def edit_user_remove_balance(self):
         self.clear()
-        self.amount = Entry(self.frm, width=self.width)
+        self.amount = Entry(self.frm, width=self.widget_width)
         self.amount.grid(column=0, row=0)
-        e1 = Button(self.frm, text="Remove", command=self.edit_user_remove_balance_tk, width=self.width, height=self.height)
+        e1 = Button(self.frm, text="Remove", command=self.edit_user_remove_balance_tk, width=self.widget_width, height=self.widget_height)
         el = [self.amount, e1]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
@@ -181,9 +191,9 @@ class admin:
         self.edit_user()
     def edit_user_transfer_in_savings(self):
         self.clear()
-        self.amount = Entry(self.frm, width=self.width)
+        self.amount = Entry(self.frm, width=self.widget_width)
         self.amount.grid(column=0, row=0)
-        e1 = Button(self.frm, text="Add", command=self.edit_user_transfer_in_savings_tk, width=self.width, height=self.height)
+        e1 = Button(self.frm, text="Add", command=self.edit_user_transfer_in_savings_tk, width=self.widget_width, height=self.widget_height)
         el = [self.amount, e1]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
@@ -192,20 +202,20 @@ class admin:
         response = users[self.id].transfer_in_savings(int(self.amount.get()))
         self.clear()   
         if response == 1:
-            e1 = Label(self.frm, text="You do not hold this amount in your balance", width=self.width, height=self.height)
-            e2 = Button(self.frm, text="Exit", command=self.edit_user, width=self.width, height=self.height)
+            e1 = Label(self.frm, text="You do not hold this amount in your balance", width=self.widget_width, height=self.widget_height)
+            e2 = Button(self.frm, text="Exit", command=self.edit_user, width=self.widget_width, height=self.widget_height)
         else:
-            e1 = Label(self.frm, text="Success! value transfered", width=self.width, height=self.height)
-            e2 = Button(self.frm, text="Exit", command=self.edit_user, width=self.width, height=self.height)
+            e1 = Label(self.frm, text="Success! value transfered", width=self.widget_width, height=self.widget_height)
+            e2 = Button(self.frm, text="Exit", command=self.edit_user, width=self.widget_width, height=self.widget_height)
         el = [e1, e2]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
             widget.configure(bg=self.bg, fg=self.fg, borderwidth=1)
     def edit_user_transfer_out_savings(self):
         self.clear()
-        self.amount = Entry(self.frm, width=self.width)
+        self.amount = Entry(self.frm, width=self.widget_width)
         self.amount.grid(column=0, row=0)
-        e1 = Button(self.frm, text="Remove", command=self.edit_user_transfer_out_savings_tk, width=self.width, height=self.height)
+        e1 = Button(self.frm, text="Remove", command=self.edit_user_transfer_out_savings_tk, width=self.widget_width, height=self.widget_height)
         el = [self.amount, e1]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
@@ -214,20 +224,20 @@ class admin:
         response = users[self.id].transfer_out_savings(int(self.amount.get()))
         self.clear()
         if response == 1:
-            e1 = Label(self.frm, text="You do not hold this amount in your savings", width=self.width, height=self.height)
-            e2 = Button(self.frm, text="Exit", command=self.edit_user, width=self.width, height=self.height)
+            e1 = Label(self.frm, text="You do not hold this amount in your savings", width=self.widget_width, height=self.widget_height)
+            e2 = Button(self.frm, text="Exit", command=self.edit_user, width=self.widget_width, height=self.widget_height)
         else:
-            e1 = Label(self.frm, text="Success! value transfered", width=self.width, height=self.height)
-            e2 = Button(self.frm, text="Exit", command=self.edit_user, width=self.width, height=self.height)
+            e1 = Label(self.frm, text="Success! value transfered", width=self.widget_width, height=self.widget_height)
+            e2 = Button(self.frm, text="Exit", command=self.edit_user, width=self.widget_width, height=self.widget_height)
         el = [e1, e2]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
             widget.configure(bg=self.bg, fg=self.fg, borderwidth=1)
     def edit_user_set_interest(self):
         self.clear()
-        self.amount = Entry(self.frm, width=self.width)
+        self.amount = Entry(self.frm, width=self.widget_width)
         self.amount.grid(column=0, row=0)
-        e1 = Button(self.frm, text="Set", command=self.edit_user_set_interest_tk, width=self.width, height=self.height)
+        e1 = Button(self.frm, text="Set", command=self.edit_user_set_interest_tk, width=self.widget_width, height=self.widget_height)
         el = [self.amount, e1]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
@@ -236,11 +246,11 @@ class admin:
         response = users[self.id].set_interest(int(self.amount.get()))
         self.clear()
         if response == 1:
-            e1 = Label(self.frm, text="Are you sure that this is correct? > 1000% seems a lot", width=self.width, height=self.height)
-            e2 = Button(self.frm, text="Exit", command=self.edit_user, width=self.width, height=self.height)
+            e1 = Label(self.frm, text="Are you sure that this is correct? > 1000% seems a lot", width=self.widget_width, height=self.widget_height)
+            e2 = Button(self.frm, text="Exit", command=self.edit_user, width=self.widget_width, height=self.widget_height)
         else:
-            e1 = Label(self.frm, text="Success! interest set", width=self.width, height=self.height)
-            e2 = Button(self.frm, text="Exit", command=self.edit_user, width=self.width, height=self.height)
+            e1 = Label(self.frm, text="Success! interest set", width=self.widget_width, height=self.widget_height)
+            e2 = Button(self.frm, text="Exit", command=self.edit_user, width=self.widget_width, height=self.widget_height)
         el = [e1, e2]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
