@@ -25,21 +25,20 @@ class admin:
         self.frm.grid()
         self.control_panel()
     def control_panel(self):
-        while True:
-            self.clear()
-            e1 = Label(self.frm, text="Control Panel", width=self.widget_width, height=self.widget_height)
-            e2 = Button(self.frm, text="Admin", command=self.admin_panel, width=self.widget_width, height=self.widget_height)
-            e3 = Button(self.frm, text="Get Users", command=self.get_users, width=self.widget_width, height=self.widget_height)
-            e4 = Button(self.frm, text="Add User", command=self.add_user, width=self.widget_width, height=self.widget_height)
-            e5 = Button(self.frm, text="Increase Font", command=self.increase_font_size, width=self.widget_width, height=self.widget_height)
-            e6 = Button(self.frm, text="Decrease Font", command=self.decrease_font_size, width=self.widget_width, height=self.widget_height)
-            e7 = Button(self.frm, text="Dark Mode", command=self.theme_switch, width=self.widget_width, height=self.widget_height)
-            e8 = Button(self.frm, text="Exit", command=self.safe_exit, width=self.widget_width, height=self.widget_height)
-            el = [e1, e2, e3, e4, e5, e6, e7, e8]
-            for i, widget in enumerate(el):
-                widget.grid(column=1, row=i)
-                widget.configure(bg=self.bg, fg=self.fg, borderwidth=1)
-            self.root.mainloop()
+        self.clear()
+        e1 = Label(self.frm, text="Control Panel", width=self.widget_width, height=self.widget_height)
+        e2 = Button(self.frm, text="Admin", command=self.admin_panel, width=self.widget_width, height=self.widget_height)
+        e3 = Button(self.frm, text="Get Users", command=self.get_users, width=self.widget_width, height=self.widget_height)
+        e4 = Button(self.frm, text="Add User", command=self.add_user, width=self.widget_width, height=self.widget_height)
+        e5 = Button(self.frm, text="Increase Font", command=self.increase_font_size, width=self.widget_width, height=self.widget_height)
+        e6 = Button(self.frm, text="Decrease Font", command=self.decrease_font_size, width=self.widget_width, height=self.widget_height)
+        e7 = Button(self.frm, text="Dark Mode", command=self.theme_switch, width=self.widget_width, height=self.widget_height)
+        e8 = Button(self.frm, text="Exit", command=self.safe_exit, width=self.widget_width, height=self.widget_height)
+        el = [e1, e2, e3, e4, e5, e6, e7, e8]
+        for i, widget in enumerate(el):
+            widget.grid(column=1, row=i)
+            widget.configure(bg=self.bg, fg=self.fg, borderwidth=1)
+        self.root.mainloop()
     def increase_font_size(self):
         self.widget_width += 10
         self.widget_height += 1
