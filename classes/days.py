@@ -4,7 +4,6 @@ from classes.account import *
 class days:
     def __init__(self):
         self.__day = 0
-        self.__day_start = datetime.now().strftime('%m/%d/%Y, %H:%M:%S')
     def pass_day(self, users):
         self.__day += 1
         for user in users:

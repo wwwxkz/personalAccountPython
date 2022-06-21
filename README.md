@@ -1,10 +1,7 @@
 # personalAccountPython
 
 Use
-<br> ```main-gui``` for stable
-<br> ```main-gui-disabled``` for fallback
+<br> ```main.py``` for stable
 
-Main Gui
+Main
 ![](https://github.com/wwwxkz/personalAccountPython/blob/main/README/0.gif)
-Main Gui Disabled
-![](https://github.com/wwwxkz/personalAccountPython/blob/main/README/1.gif)

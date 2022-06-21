@@ -1,5 +1,5 @@
 from datetime import datetime
-from threading import Thread, Timer
+from threading import Timer
 import shutil
 
 class log:

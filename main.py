@@ -6,7 +6,6 @@ from tkinter import *
 
 import os
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
-from matplotlib.backend_bases import key_press_handler
 from matplotlib.figure import Figure
 
 users = []
@@ -266,7 +265,10 @@ class admin:
             widget.configure(bg=self.bg, fg=self.fg, borderwidth=1)
     def log_analyzer(self):
         self.clear()
-        logs = log.log_get()
+        try:
+            logs = log.log_get()
+        except:
+            logs = ['00/00/0000 - No data']
         dates = []
         actions = []
         for log_line in logs:
