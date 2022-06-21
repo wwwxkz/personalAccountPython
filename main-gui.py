@@ -5,6 +5,9 @@ from classes.log import *
 from tkinter import *
 
 import os
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.backend_bases import key_press_handler
+from matplotlib.figure import Figure
 
 users = []
 class admin:
@@ -72,8 +75,9 @@ class admin:
         e2 = Button(self.frm, text="Delete logs", command=self.delete_logs, width=self.widget_width, height=self.widget_height)
         e3 = Button(self.frm, text="Delete accounts", command=self.delete_accounts, width=self.widget_width, height=self.widget_height)
         e4 = Button(self.frm, text="Pass day", command=self.pass_day, width=self.widget_width, height=self.widget_height)
-        e5 = Button(self.frm, text="Exit", command=self.control_panel, width=self.widget_width, height=self.widget_height)
-        el = [e1, e2, e3, e4, e5]
+        e5 = Button(self.frm, text="Log Analyzer", command=self.log_analyzer, width=self.widget_width, height=self.widget_height)
+        e6 = Button(self.frm, text="Exit", command=self.control_panel, width=self.widget_width, height=self.widget_height)
+        el = [e1, e2, e3, e4, e5, e6]
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
             widget.configure(bg=self.bg, fg=self.fg, borderwidth=1)
@@ -260,6 +264,26 @@ class admin:
         for i, widget in enumerate(el):
             widget.grid(column=1, row=i)
             widget.configure(bg=self.bg, fg=self.fg, borderwidth=1)
+    def log_analyzer(self):
+        self.clear()
+        logs = log.log_get()
+        dates = []
+        actions = []
+        for log_line in logs:
+            line = log_line.split(' - ')   
+            dates.append(line[0])
+            line.pop(0)
+            actions.append(len(line))
+        fig = Figure(figsize=(5, 4), dpi=100)
+        fig.add_subplot(111).plot(dates, actions)
+        canvas = FigureCanvasTkAgg(fig, master=self.frm)
+        canvas.draw()
+        canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
+        toolbar = NavigationToolbar2Tk(canvas, self.frm)
+        toolbar.update()
+        button = Button(master=self.frm, text="Exit", command=self.admin_panel, width=self.widget_width, height=self.widget_height)
+        button.configure(bg=self.bg, fg=self.fg, borderwidth=1)
+        button.pack(side=BOTTOM)
     def clear(self):
         self.frm.destroy()
         self.frm = Frame(self.root)
