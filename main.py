@@ -21,8 +21,11 @@ class admin:
         self.root.grid_columnconfigure(0, weight=1)
         self.root.grid_rowconfigure(0, weight=1)
         self.root.title("personalAccountPython")
-        self.root.configure(bg=self.bg)
-        self.root.state('zoomed')
+        self.root.configure(bg=self.bg) 
+        if os.name == 'nt':
+            self.root.state('zoomed') 
+        else:
+            self.root.attributes('-zoomed', True)
         self.frm = Frame(self.root)
         self.frm.grid()
         self.control_panel()
@@ -266,7 +269,7 @@ class admin:
     def log_analyzer(self):
         self.clear()
         try:
-            logs = log.log_get()
+            logs = log.get()
         except:
             logs = ['00/00/0000 - No data']
         dates = []
